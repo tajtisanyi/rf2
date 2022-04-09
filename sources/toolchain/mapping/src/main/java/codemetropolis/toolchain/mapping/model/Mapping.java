@@ -34,6 +34,9 @@ public class Mapping {
 	@XmlAttribute
 	private String id;
 	
+	@XmlAttribute
+	private String content;
+	
 	@XmlElementWrapper(name="resources")
 	@XmlElement(name="constant")
 	private List<Constant> resources = new ArrayList<>();
@@ -48,6 +51,14 @@ public class Mapping {
 		this.id = id;
 	}
 
+	public String getContent() {
+		return content;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 	public String getVersion() {
 		return version;
 	}
