@@ -41,14 +41,14 @@ class MainTest {
 
     @Test
     public void wrongFileTypeTest() {
-        String expectedResult = "-h false -t test -s sourcePath -o outputPath -p alma banán retek";
+        String expectedResult = "-h false -t test -s sourcePath -o outputPath -p apple banana orange";
         String[] result = Main.processFileInput(new String[]{"C:/Users/sooky/test.txt"});
         assertEquals("The parameter file should be a valid json file!\r\n", errContent.toString());
     }
 
     @Test
     public void processFileInputTest() {
-        String expectedResult = "-h false -t test -s sourcePath -o outputPath -p alma banán retek";
+        String expectedResult = "-h false -t test -s sourcePath -o outputPath -p apple banana orange";
         String[] result = Main.processFileInput(new String[]{"C:/Users/sooky/test.json"});
         assertArrayEquals(expectedResult.split(" "), result);
     }
@@ -56,7 +56,7 @@ class MainTest {
     @Test
     public void noFileFoundTest() {
         String filePath = "C:/Users/sooky/notExist/test.txt";
-        String expectedResult = "-h false -t test -s sourcePath -o outputPath -p alma banán retek";
+        String expectedResult = "-h false -t test -s sourcePath -o outputPath -p apple banana orange";
         String[] result = Main.processFileInput(new String[]{filePath});
         assertEquals(String.format("Cannot find resource file %s", filePath) + "\r\n", errContent.toString());
     }

@@ -1,0 +1,11 @@
+{
+  "help": false,
+  "type": "test",
+  "source": "sourcePath",
+  "output": "outputPath",
+  "params": [
+    "apple",
+    "banana",
+    "orange"
+  ]
+}
