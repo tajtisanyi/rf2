@@ -5,11 +5,14 @@ import codemetropolis.toolchain.commons.util.Resources;
 import codemetropolis.toolchain.commons.util.Settings;
 import codemetropolis.toolchain.converter.control.ConverterType;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,16 +26,8 @@ public class Main {
 
 		FileLogger.load(Settings.get("converter_log_file"));
 		if (args.length == 1) {
-			InputStream is = Main.class.getResourceAsStream(args[0]);
-			if (is == null) {
-				String errorMessage = String.format("Cannot find resource file %s", args[0]);
-				FileLogger.logError(errorMessage, new FileNotFoundException());
-				System.err.println(errorMessage);
-				return;
-			}
-			JSONTokener jsonTokener = new JSONTokener(is);
-			JSONObject object = new JSONObject(jsonTokener);
-			args = convertJsonToArgs(object);
+			args = processFileInput(args);
+			if (args == null) return;
 		}
 
 		CommandLineOptions options = new CommandLineOptions();
@@ -95,7 +90,32 @@ public class Main {
 
 	}
 
-	private static String[] convertJsonToArgs(JSONObject jsonObject) {
+	protected static String[] processFileInput(String[] args) {
+		File jsonFile = new File(args[0]);
+		InputStream inputStream;
+		try {
+			inputStream = new FileInputStream(jsonFile);
+		} catch (FileNotFoundException e) {
+			String errorMessage = String.format("Cannot find resource file %s", args[0]);
+			FileLogger.logError(errorMessage, new FileNotFoundException());
+			System.err.println(errorMessage);
+			return null;
+		}
+		JSONObject object;
+		try {
+			JSONTokener jsonTokener = new JSONTokener(inputStream);
+			object = new JSONObject(jsonTokener);
+		} catch (JSONException e) {
+			String errorMessage = "The parameter file should be a valid json file!";
+			FileLogger.logError(errorMessage, new FileNotFoundException());
+			System.err.println(errorMessage);
+			return null;
+		}
+		args = convertJsonToArgs(object);
+		return args;
+	}
+
+	protected static String[] convertJsonToArgs(JSONObject jsonObject) {
 		List<String> result = new ArrayList<>();
 		if (jsonObject.has("help")) {
 			result.add("-h");
@@ -114,10 +134,12 @@ public class Main {
 			result.add(jsonObject.optString("output"));
 		}
 		if (jsonObject.has("params")) {
-			JSONArray params = jsonObject.getJSONArray("params");
-			result.add("-p");
-			for (int i = 0; i < params.length(); i++) {
-				result.add(params.get(i).toString());
+			JSONArray params = jsonObject.optJSONArray("params");
+			if (params != null) {
+				result.add("-p");
+				for (int i = 0; i < params.length(); i++) {
+					result.add(params.get(i).toString());
+				}
 			}
 		}
 		return result.toArray(new String[0]);

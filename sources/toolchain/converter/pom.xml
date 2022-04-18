@@ -38,7 +38,7 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>commons</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>args4j</groupId>
 			<artifactId>args4j</artifactId>
@@ -49,5 +49,12 @@
 			<artifactId>graphlib</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
 	</dependencies>
 </project>
