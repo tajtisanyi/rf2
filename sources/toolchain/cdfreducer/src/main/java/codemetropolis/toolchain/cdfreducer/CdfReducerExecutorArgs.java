@@ -10,7 +10,7 @@ public class CdfReducerExecutorArgs extends ExecutorArgs {
 	private String outputFile;
 	private Map<String, String> params;
 	
-	public CdfReducerExecutorArgs(String outputFile, String inputFile, Map<String, String> params) {
+	public CdfReducerExecutorArgs(String inputFile, String outputFile,  Map<String, String> params) {
 		super();
 		this.inputFile = inputFile;
 		this.outputFile = outputFile;

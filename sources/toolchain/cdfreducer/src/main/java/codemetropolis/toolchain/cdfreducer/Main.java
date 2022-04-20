@@ -12,14 +12,19 @@ import java.util.Map;
 public class Main {
 
 	public static void main(String[] args) {
-		FileLogger.load(Settings.get("converter_log_file"));
+		FileLogger.load(Settings.get("cdfreducer_log_file"));
 
 		CommandLineOptions options = new CommandLineOptions();
 		CmdLineParser parser = new CmdLineParser(options);
 
 		try {
 			parser.parseArgument(args);
-			if(options.getSource() == null || options.getOutputFile() == null ){
+			if (options.showHelp()) {
+				System.out.println(Resources.get("cdfreducer_introduction"));
+				System.out.println(Resources.get("cdfreducer_usage") + '\n' + Resources.get("cdfreducer_usage_aliases"));
+				return;
+			}
+			if (options.getSource() == null || options.getOutputFile() == null) {
 				throw new IllegalArgumentException();
 			}
 		} catch (CmdLineException | IllegalArgumentException e) {
@@ -30,30 +35,28 @@ public class Main {
 		}
 
 		Map<String, String> params = new HashMap<>();
-		if(options.getParams() != null) {
+		if (options.getParams() != null) {
 			try {
 				String[] paramsArray = options.getParams();
-				for(String str : paramsArray) {
+				for (String str : paramsArray) {
 					String[] strParts = str.split("=");
-					params.put(strParts[0], strParts[1]);
+					// using "pnr" and "pvr" as aliases
+					if (strParts[0].toLowerCase().equals("pnr"))
+						params.put("property-name-regex", strParts[1]);
+					else if (strParts[0].toLowerCase().equals("pvr"))
+						params.put("property-value-regex", strParts[1]);
+					else
+						params.put(strParts[0], strParts[1]);
 				}
-			} catch(Exception e) {
+			} catch (Exception e) {
 				String message = Resources.get("invalid_params");
 				System.err.println(message);
 				FileLogger.logError(message, e);
 			}
 		}
 
-		if(options.showHelp()) {
-			System.out.println(Resources.get("converter_introduction"));
-			System.out.println(Resources.get("converter_usage"));
-			return;
-		}
-
-		//LOGIC TIME
-
-		CdfExecutor executor = new CdfExecutor();
-		executor.setPrefix(Resources.get("converter_prefix"));
+		CdfReducerExecutor executor = new CdfReducerExecutor();
+		executor.setPrefix(Resources.get("cdfreducer_prefix"));
 		executor.setErrorPrefix(Resources.get("error_prefix"));
 		executor.execute(
 				new CdfReducerExecutorArgs(
@@ -61,6 +64,5 @@ public class Main {
 						options.getOutputFile(),
 						params
 				));
-		System.out.println("{nameRegex=nanameRegex, valueRegex=vavalueRegex}");
+		}
 	}
-}

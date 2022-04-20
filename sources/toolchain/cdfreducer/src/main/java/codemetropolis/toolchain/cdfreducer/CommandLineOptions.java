@@ -12,7 +12,7 @@ public class CommandLineOptions {
 	private String source = null;
 	
 	@Option(name="-o", aliases = {"--output"})
-	private String outputFile = "converterToMapping.xml";
+	private String outputFile = "converterToMappingReduced.xml";
 	
 	@Option(name="-p", handler = StringArrayOptionHandler.class, aliases = {"--params"})
 	private String[] params = null;
