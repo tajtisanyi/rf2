@@ -1,5 +1,7 @@
 package codemetropolis.toolchain.converter.sourcemeter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import codemetropolis.toolchain.commons.cdf.CdfElement;
 import codemetropolis.toolchain.commons.cdf.CdfTree;
 import codemetropolis.toolchain.commons.cdf.converter.CdfConverter;
 import codemetropolis.toolchain.commons.cdf.CdfProperty;
+import columbus.ColumbusException;
 import graphlib.Attribute;
 import graphlib.Attribute.AttributeIterator;
 import graphlib.AttributeFloat;
@@ -28,7 +31,11 @@ public class GraphConverter extends CdfConverter {
 	private static final String ROOT_NODE_ID = "L100";
 	
 	@Override
-	public CdfTree createElements(String graphPath) {
+	public CdfTree createElements(String graphPath) throws FileNotFoundException {
+		File file = new File(graphPath);
+		if (!file.exists()) {
+			throw new FileNotFoundException("File " + graphPath + " not found!");
+		}
 		Graph graph = new Graph();
 		graph.loadBinary(graphPath);
 		Node root = graph.findNode(ROOT_NODE_ID);

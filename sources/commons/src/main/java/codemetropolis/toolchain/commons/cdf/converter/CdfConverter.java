@@ -1,5 +1,6 @@
 package codemetropolis.toolchain.commons.cdf.converter;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public abstract class CdfConverter {
 		return params.get(key);
 	}
 	
-	public abstract CdfTree createElements(String source) throws CodeMetropolisException;
+	public abstract CdfTree createElements(String source) throws CodeMetropolisException, FileNotFoundException;
 	
 	protected void fireConverterEvent(String message) {
 		for(ConverterEventListener l : listeners) {

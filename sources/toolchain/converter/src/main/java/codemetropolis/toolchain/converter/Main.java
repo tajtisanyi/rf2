@@ -13,6 +13,7 @@ import codemetropolis.toolchain.converter.control.ConverterType;
 
 public class Main {
 
+	// java -jar converter-1.4.0.jar -t sourcemeter -i a.graph
 	public static void main(String[] args) {
 		
 		FileLogger.load(Settings.get("converter_log_file"));

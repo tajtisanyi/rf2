@@ -11,6 +11,8 @@ import codemetropolis.toolchain.commons.executor.ExecutorArgs;
 import codemetropolis.toolchain.commons.util.Resources;
 import codemetropolis.toolchain.converter.control.ConverterLoader;
 
+import java.io.FileNotFoundException;
+
 public class ConverterExecutor extends AbstractExecutor {
 	
 	@Override
@@ -26,13 +28,16 @@ public class ConverterExecutor extends AbstractExecutor {
 			}
 			
 		});
-		
+
 		print(Resources.get("converting_to_cdf"));
 		CdfTree cdfTree = null;
 		try {
 			cdfTree = converter.createElements(converterArgs.getSource());
 		} catch (CodeMetropolisException e) {
 			printError(e, e.getMessage());
+			return false;
+		} catch(FileNotFoundException e) {
+			print("Warning: File not found");
 			return false;
 		} catch (Exception e) {
 			printError(e, Resources.get("converter_error"));
