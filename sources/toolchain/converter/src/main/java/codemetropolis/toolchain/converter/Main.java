@@ -90,6 +90,11 @@ public class Main {
 
 	}
 
+	/**
+	 * @param args json filepath representing the command line parameters
+	 * @return a String[] parsed from the input json file by {@link #convertJsonToArgs(JSONObject)}
+	 * @author N6L972 Levente Soóky
+	 */
 	protected static String[] processFileInput(String[] args) {
 		File jsonFile = new File(args[0]);
 		InputStream inputStream;
@@ -115,6 +120,11 @@ public class Main {
 		return args;
 	}
 
+	/**
+	 * @param jsonObject JSONObject representing the parameters
+	 * @return a String[] parsed from the parameter jsonObject
+	 * @author N6L972 Levente Soóky
+	 */
 	protected static String[] convertJsonToArgs(JSONObject jsonObject) {
 		List<String> result = new ArrayList<>();
 		if (jsonObject.has("help")) {
