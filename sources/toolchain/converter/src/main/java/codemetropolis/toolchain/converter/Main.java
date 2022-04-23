@@ -101,7 +101,7 @@ public class Main {
 		try {
 			inputStream = new FileInputStream(jsonFile);
 		} catch (FileNotFoundException e) {
-			String errorMessage = String.format("Cannot find resource file %s", args[0]);
+			String errorMessage = String.format("%s%s%s", Resources.get("error_prefix"), Resources.get("invalid_file_path"), args[0]);
 			FileLogger.logError(errorMessage, new FileNotFoundException());
 			System.err.println(errorMessage);
 			return null;
@@ -111,7 +111,7 @@ public class Main {
 			JSONTokener jsonTokener = new JSONTokener(inputStream);
 			object = new JSONObject(jsonTokener);
 		} catch (JSONException e) {
-			String errorMessage = "The parameter file should be a valid json file!";
+			String errorMessage = String.format("%s%s", Resources.get("error_prefix"), Resources.get("invalid_json_file"));
 			FileLogger.logError(errorMessage, new FileNotFoundException());
 			System.err.println(errorMessage);
 			return null;

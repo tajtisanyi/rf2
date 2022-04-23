@@ -1,5 +1,6 @@
 package codemetropolis.toolchain.converter;
 
+import codemetropolis.toolchain.commons.util.Resources;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
@@ -42,7 +43,7 @@ class MainTest {
     @Test
     public void wrongFileTypeTest() {
         String[] result = Main.processFileInput(new String[]{"C:/Users/sooky/test.txt"});
-        assertEquals("The parameter file should be a valid json file!\r\n", errContent.toString());
+        assertEquals(String.format("%s%s", Resources.get("error_prefix"), Resources.get("invalid_json_file")) + "\r\n", errContent.toString());
     }
 
     @Test
@@ -55,7 +56,8 @@ class MainTest {
     @Test
     public void noFileFoundTest() {
         String filePath = "C:/Users/sooky/notExist/test.txt";
-        assertEquals(String.format("Cannot find resource file %s", filePath) + "\r\n", errContent.toString());
+        String[] result = Main.processFileInput(new String[]{filePath});
+        assertEquals(String.format("%s%s%s", Resources.get("error_prefix"), Resources.get("invalid_file_path"), filePath) + "\r\n", errContent.toString());
     }
 
 }
