@@ -25,7 +25,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		FileLogger.load(Settings.get("converter_log_file"));
-		if (args.length == 1) {
+		if (args.length == 1 && args[0].endsWith(".json")) {
 			args = processFileInput(args);
 			if (args == null) return;
 		}
