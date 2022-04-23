@@ -20,15 +20,20 @@ public class Main {
 	        parser.parseArgument(args);
 	        if((options.getInputFile() == null || options.getMappingFile() == null) && !options.showHelp())
 	        	throw new IllegalArgumentException();
-	    } catch (CmdLineException | IllegalArgumentException e) {
+	    } catch (CmdLineException e) {
+			String message = e.getLocalizedMessage();
+			FileLogger.logWarning(e.getLocalizedMessage(), e);
+			System.out.println(message);
+			return;
+	    } catch (IllegalArgumentException e) {
 	    	String message = Resources.get("command_line_error");
 	    	FileLogger.logError(message, e);
 	    	System.err.println(message);
 	    	System.err.println(Resources.get("mapping_usage"));
 	    	return;
 	    }
-	    
-	    if(options.showHelp()) {
+
+		if(options.showHelp()) {
 	    	System.out.println(Resources.get("mapping_introduction"));
 	    	System.out.println(Resources.get("mapping_usage"));
 	    	return;
