@@ -46,7 +46,7 @@ public class Main {
 					else if (strParts[0].toLowerCase().equals("pvr"))
 						params.put("property-value-regex", strParts[1]);
 					else
-						params.put(strParts[0], strParts[1]);
+						params.put(strParts[0].toLowerCase(), strParts[1].toLowerCase());
 				}
 			} catch (Exception e) {
 				String message = Resources.get("invalid_params");
