@@ -21,23 +21,12 @@ public class CdfReducerExecutorArgs extends ExecutorArgs {
 		return inputFile;
 	}
 
-	public void setInputFile(String inputFile) {
-		this.inputFile = inputFile;
-	}
-
 	public String getOutputFile() {
 		return outputFile;
-	}
-
-	public void setOutputFile(String outputFile) {
-		this.outputFile = outputFile;
 	}
 
 	public Map<String, String> getParams() {
 		return params;
 	}
 
-	public void setParams(Map<String, String> params) {
-		this.params = params;
-	}
 }

@@ -1,5 +1,6 @@
 package codemetropolis.toolchain.cdfreducer.model;
-
+import codemetropolis.toolchain.commons.util.FileLogger;
+import codemetropolis.toolchain.commons.util.Settings;
 
 import codemetropolis.toolchain.commons.cdf.CdfProperty;
 import codemetropolis.toolchain.commons.util.FileUtils;
@@ -12,9 +13,8 @@ import java.util.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -136,6 +136,7 @@ public class CdfReducerElement {
      * @param doc  document to create
      * @param regexParams params for the regexes
      * @return
+     * @author h759770 Fülep Martin Patrik
      */
     public Element toXmlElement(Document doc, Map<String, String> regexParams) {
 
@@ -188,6 +189,8 @@ public class CdfReducerElement {
      * @param doc output file
      * @param propertiesElement the properties wrapper around this property
      * @param prop property itself
+     * @return
+     * @author h759770 Fülep Martin Patrik
      */
     public void addPropertyToXML(Document doc, Element propertiesElement, CdfReducerProperty prop){
 
@@ -204,8 +207,10 @@ public class CdfReducerElement {
      * @param filename output file
      * @param regexParams params for the regexes
      * @throws Exception function can throw an Exception
+     * @author h759770 Fülep Martin Patrik
      */
-    public void writeToFile(String filename, Map<String, String> regexParams) throws Exception {
+    public void writeToFile(String filename, Map<String, String> regexParams){
+        FileLogger.load(Settings.get("cdfreducer_log_file"));
         try {
             FileUtils.createContainingDirs(filename);
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -221,8 +226,12 @@ public class CdfReducerElement {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             transformer.transform(source, result);
-        } catch (Exception e) {
-            throw new Exception(e);
+        } catch (ParserConfigurationException e) {
+            FileLogger.logError("Couldn't build new document!\n", e);
+            System.out.println("Couldn't build new document!");;
+        } catch (TransformerException e) {
+            FileLogger.logError("Couldn't transform output data into an ixml document!\n", e);
+            System.out.println("Couldn't transform output data into an ixml document!");;
         }
     }
 }
