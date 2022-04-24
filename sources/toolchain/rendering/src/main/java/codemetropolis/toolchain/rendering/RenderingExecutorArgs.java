@@ -6,8 +6,11 @@ public class RenderingExecutorArgs extends ExecutorArgs {
 	
 	private String inputFile;
 	private String worldPath;
+	private String createBackup;
 	private boolean overwriteSilently;
 	private int maxTime;
+	
+	
 	
 	public RenderingExecutorArgs(String inputFile, String worldPath) {
 		this(inputFile, worldPath, false);
