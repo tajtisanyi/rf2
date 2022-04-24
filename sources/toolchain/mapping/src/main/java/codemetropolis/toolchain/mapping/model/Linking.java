@@ -21,7 +21,8 @@ public class Linking {
 
     private static final Map<Type, String[]> SUPPORTED_PROPERTIES = new HashMap<>();
 
-    static {
+    static
+    {
         SUPPORTED_PROPERTIES.put(Type.FLOOR, new String[]{"width", "height", "length", "character", "external_character", "torches", "content"});
         SUPPORTED_PROPERTIES.put(Type.CELLAR, new String[]{"width", "height", "length", "character", "external_character", "torches", "content"});
         SUPPORTED_PROPERTIES.put(Type.GARDEN, new String[]{"tree-ratio", "mushroom-ratio", "flower-ratio"});
