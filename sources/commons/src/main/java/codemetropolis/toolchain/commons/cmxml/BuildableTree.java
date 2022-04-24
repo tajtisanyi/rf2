@@ -169,7 +169,8 @@ public class BuildableTree {
 					for(int i = 1; attributeNodes.item(i) != null; i += 2) {
 						b.addAttribute(
 								((Element)attributeNodes.item(i)).getAttribute("name"),
-								((Element)attributeNodes.item(i)).getAttribute("value")
+								((Element)attributeNodes.item(i)).getAttribute("value"),
+								((Element)attributeNodes.item(i)).getAttribute("original")
 						);
 					}
 					

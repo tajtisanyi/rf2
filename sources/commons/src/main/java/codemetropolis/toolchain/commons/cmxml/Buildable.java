@@ -159,12 +159,20 @@ public class Buildable implements Comparable<Buildable> {
 	public void addAttribute(Attribute a) {
 		attributes.add(a);
 	}
-	
-	public void addAttribute(String name, String value) {
+
+	/**
+	 * Used to add an attribute to a buildable in the xml
+	 *
+	 * @param name the name of the attribute
+	 * @param value the value of the attribute (after conversion)
+	 * @param original the original value of the attribute (before the conversion)
+	 */
+	public void addAttribute(String name, String value, String original) {
 		Attribute a = new Attribute(
 				name,
-				value
-				);
+				value,
+				original
+		);
 		attributes.add(a);
 	}
 	
@@ -406,7 +414,7 @@ public class Buildable implements Comparable<Buildable> {
 				+ indentSb + "\t<attributes>\n"
 				);
 		for(Attribute a : attributes) {
-			sb.append(indentSb + "\t\t<attribute name=\"" + a.getName() + "\" value=\"" + (escape ? StringEscapeUtils.escapeXml10(a.getValue()) : a.getValue()) + "\"/>\n");
+			sb.append(indentSb + "\t\t<attribute name=\"" + a.getName() + "\" value=\"" + (escape ? StringEscapeUtils.escapeXml10(a.getValue()) : a.getValue()) + "\" original=\"" + (escape ? StringEscapeUtils.escapeXml10(a.getOriginal()) : a.getOriginal()) + "\" />\n");
 		}
 		sb.append(
 				indentSb + "\t</attributes>\n"
@@ -447,6 +455,7 @@ public class Buildable implements Comparable<Buildable> {
 			Element attr = doc.createElement("attribute");
 			attr.setAttribute("name", "" + a.getName());
 			attr.setAttribute("value", "" + a.getValue());
+			attr.setAttribute("original", "" + a.getOriginal());
 			attributes.appendChild(attr);
 		}
 

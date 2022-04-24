@@ -108,25 +108,30 @@ public class MappingController {
 				String variableId = binding.getVariableId();
 				if(variableId != null) {
 					String resource = resources.get(variableId);
-					setProperty(b, binding.getTo(), resource, false);
+					// no conversion was used here, so the original value is the resource itself
+					setProperty(b, binding.getTo(), resource, resource, false);
 					continue;
 				}
 				
 				Object value = attributes.get(binding.getFrom());
+				// store the value in the original variable
+				Object original = value;
 				if(value == null) {
 					String defaultValue = binding.getDefaultValue();
 					if(defaultValue == null || defaultValue.isEmpty()) continue;
-					setProperty(b, binding.getTo(), defaultValue, true);
+					// if the value is null, then the original value is supposed to be the default value
+					setProperty(b, binding.getTo(), defaultValue, defaultValue, true);
 					continue;
 				}
-				
+
 				Limit limit = limitController.getLimit(linking.getSource(), binding.getFrom());
 				
 				for(Conversion c : binding.getConversions()) {
 					value = c.apply(value, limit);
 				}
-				
-				setProperty(b, binding.getTo(), value, true);
+
+				// after the conversion we need to pass the orignal value to the function aswell
+				setProperty(b, binding.getTo(), value, original,true);
 			}
 			
 		}
@@ -136,8 +141,17 @@ public class MappingController {
 		prepareBuildables(buildableTree);
 		return buildableTree;
 	}
-	
-	private void setProperty(Buildable b, String propertyName, Object value, boolean adjustSize) {
+
+	/**
+	 * This function is used to set a property inside a buildable object
+	 *
+	 * @param b the buildable where the property is set
+	 * @param propertyName the name of the property
+	 * @param value the value of the property (after conversion)
+	 * @param original the original value of the property (before conversion)
+	 * @param adjustSize need to adjust size?
+	 */
+	private void setProperty(Buildable b, String propertyName, Object value, Object original, boolean adjustSize) {
 
 		switch(propertyName) {
 			case "height":
@@ -147,7 +161,7 @@ public class MappingController {
 				if(adjustSize) value = Conversion.toInt(MIN_SIZE + (int)value * scale);
 				break;
 		}
-		
+
 		switch(propertyName) {
 			case "height":
 				b.setSizeY((int)value);
@@ -159,8 +173,9 @@ public class MappingController {
 				b.setSizeZ((int)value);
 				break;
 			default:
-				b.addAttribute(propertyName, String.valueOf(value));
-		}	
+				// we need to pass the original value of the property aswell, to the attribute class
+				b.addAttribute(propertyName, String.valueOf(value), String.valueOf(original));
+		}
 	}
 	
 	private void setChildren(Buildable buildable, Element element){
