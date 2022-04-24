@@ -22,6 +22,11 @@ public class Main {
 	        	throw new IllegalArgumentException();
 	    } catch (CmdLineException | IllegalArgumentException e) {
 			
+			/**
+			* map_parameter_error =The map parameter does not take a value - found in resources.properties  
+	 		* @author CQIO60 Marcell Bezzeg
+	 		*/
+
 			for(int i=0; i<args.length; i++) {
 	    		if ( args[i].equals("true") && i == args.length-1) {
             		System.err.println(Resources.get("map_parameter_error"));
