@@ -128,8 +128,11 @@ public class Main {
 	protected static String[] convertJsonToArgs(JSONObject jsonObject) {
 		List<String> result = new ArrayList<>();
 		if (jsonObject.has("help")) {
-			result.add("-h");
-			result.add(String.valueOf(jsonObject.optBoolean("help")));
+			boolean isHelpNeeded = jsonObject.optBoolean("help");
+			if (isHelpNeeded) {
+				result.add("-h");
+				result.add(String.valueOf(Boolean.TRUE));
+			}
 		}
 		if (jsonObject.has("type")) {
 			result.add("-t");
