@@ -28,6 +28,11 @@ public class Floor extends Building {
 		prepareDoor();
 		prepareSigns();
 		prepareTorches();
+		prepareContent();
+	}
+	
+	private void prepareContent(){
+	    //TODO
 	}
 	
 	protected void prepareDoor() {
