@@ -18,13 +18,12 @@ import codemetropolis.toolchain.mapping.exceptions.NotSupportedLinkingException;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Linking {
-    
-    /
-    * Stores the supported properties for each building type.
-    * It is necessary to have a valid linking
-    /
 
     private static final Map<Type, String[]> SUPPORTED_PROPERTIES = new HashMap<>();
+    
+    /**
+     * Stores the supported properties for buildable type.
+     **/
 
     static
     {
