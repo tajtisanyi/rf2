@@ -16,8 +16,10 @@ public class CommandLineOptions {
 	@Option(name="-s", aliases = { "-ow", "--overwrite", "--silent" })
 	private boolean overwriteSilently = false;
 
-	@Option(name="-b", aliases = { "--backup", "-backup" })
-	private boolean createBackup = false;
+	@Option(name="-b", aliases = { "--backup", "-backup" }, usage="create Backup")
+	private String outputFile = getInputFile() + "_Backup.xml";
+
+
 	
 	public boolean showHelp() {
 		return showHelp;
@@ -35,7 +37,7 @@ public class CommandLineOptions {
 		return overwriteSilently;
 	}
 
-	public boolean createBackup() {
+	public String createBackup() {
 		return createBackup;
 	}
 
