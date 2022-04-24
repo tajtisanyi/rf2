@@ -18,8 +18,10 @@ public class Main {
 
 	    try {
 	        parser.parseArgument(args);
-	        if((options.getInputFile() == null || options.getMappingFile() == null) && !options.showHelp())
-	        	throw new IllegalArgumentException();
+	        if((options.getInputFile() == null || options.getMappingFile() == null) && !options.showHelp()) {
+				System.err.println(Resources.get("mapping_usage"));
+				return;
+			}
 	    } catch (CmdLineException | IllegalArgumentException e) {
 	    	String message = Resources.get("command_line_error");
 	    	FileLogger.logError(message, e);
