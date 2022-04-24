@@ -23,8 +23,11 @@ public class Main {
 	    try {
 	        parser.parseArgument(args);
 	        if(options.getType() == null || options.getSource() == null ){
-	        	throw new IllegalArgumentException();
-	        }
+				System.err.println(Resources.get("without_param"));
+				System.err.println(Resources.get("converter_usage"));
+				return;
+
+			}
 	    } catch (CmdLineException | IllegalArgumentException e) {
 	    	String message = Resources.get("command_line_error");
 	    	FileLogger.logError(message, e);
