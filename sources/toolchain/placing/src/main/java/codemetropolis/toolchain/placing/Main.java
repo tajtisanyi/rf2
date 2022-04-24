@@ -21,6 +21,14 @@ public class Main {
 	        if(options.getInputFile() == null && !options.showHelp())
 	        	throw new IllegalArgumentException();
 	    } catch (CmdLineException | IllegalArgumentException e) {
+			
+			for(int i=0; i<args.length; i++) {
+	    		if ( args[i].equals("true") && i == args.length-1) {
+            		System.err.println(Resources.get("map_parameter_error"));
+                    return;
+            	}
+            }
+
 	    	String message = Resources.get("command_line_error");
 	    	FileLogger.logError(message, e);
 	    	System.err.println(message);
