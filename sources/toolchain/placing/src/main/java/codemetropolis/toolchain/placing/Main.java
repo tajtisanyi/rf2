@@ -23,8 +23,10 @@ public class Main {
 	    } catch (CmdLineException | IllegalArgumentException e) {
 			
 			/**
+			* It goes through the command line arguments, and warns the user if required
 			* map_parameter_error =The map parameter does not take a value - found in resources.properties  
-	 		* @author CQIO60 Marcell Bezzeg
+	 		* @param args The Command Line arguments
+			* @author CQIO60 Marcell Bezzeg
 	 		*/
 
 			for(int i=0; i<args.length; i++) {
