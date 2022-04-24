@@ -26,6 +26,19 @@ public class Main {
 	        	throw new IllegalArgumentException();
 	        }
 	    } catch (CmdLineException | IllegalArgumentException e) {
+			/**
+			 * Checks if the last parameter is the -o flag, so it's empty
+			 * Warns the user that the output file parameter value is missing
+			 * Show converter usage
+			 */
+			for (int i = 0; i < args.length; i++) {
+				if (args[i].equals("-o") && i == args.length-1) {
+					System.err.println(Resources.get("empty_output_param"));
+					System.err.println(Resources.get("converter_usage"));
+					return;
+				}
+			}
+
 	    	String message = Resources.get("command_line_error");
 	    	FileLogger.logError(message, e);
 	    	System.err.println(message);
