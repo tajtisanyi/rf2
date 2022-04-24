@@ -12,9 +12,11 @@ import codemetropolis.toolchain.commons.util.Resources;
 import codemetropolis.toolchain.converter.control.ConverterLoader;
 
 import java.io.FileNotFoundException;
-
+	/** In the ConverterExecutor class there are some try - catch blocks to handle errors. A new block is added to
+	 * 	handle the option where there is not any input graph.
+	 * 	@author Horváth Bendegúz/983246
+	 * */
 public class ConverterExecutor extends AbstractExecutor {
-	
 	@Override
 	public boolean execute(ExecutorArgs args) {
 		ConverterExecutorArgs converterArgs = (ConverterExecutorArgs) args;
@@ -28,7 +30,6 @@ public class ConverterExecutor extends AbstractExecutor {
 			}
 			
 		});
-
 		print(Resources.get("converting_to_cdf"));
 		CdfTree cdfTree = null;
 		try {
@@ -36,6 +37,10 @@ public class ConverterExecutor extends AbstractExecutor {
 		} catch (CodeMetropolisException e) {
 			printError(e, e.getMessage());
 			return false;
+		/**
+		 * Returns false when the error is caught.
+		 * @param e is the the exception to catch
+		 * */
 		} catch(FileNotFoundException e) {
 			print("Warning: File not found");
 			return false;

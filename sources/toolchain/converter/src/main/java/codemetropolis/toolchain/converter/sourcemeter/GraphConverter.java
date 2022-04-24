@@ -10,7 +10,6 @@ import codemetropolis.toolchain.commons.cdf.CdfElement;
 import codemetropolis.toolchain.commons.cdf.CdfTree;
 import codemetropolis.toolchain.commons.cdf.converter.CdfConverter;
 import codemetropolis.toolchain.commons.cdf.CdfProperty;
-import columbus.ColumbusException;
 import graphlib.Attribute;
 import graphlib.Attribute.AttributeIterator;
 import graphlib.AttributeFloat;
@@ -32,6 +31,11 @@ public class GraphConverter extends CdfConverter {
 	
 	@Override
 	public CdfTree createElements(String graphPath) throws FileNotFoundException {
+		/**
+		 * There is a new File type variable, that gets the graphPath value, then in the if statement it is checked if the file whether
+		 * exists or not. The error thrown with a message about the graph path not found.
+		 * @author Horváth Bendegúz/h983246
+		 * */
 		File file = new File(graphPath);
 		if (!file.exists()) {
 			throw new FileNotFoundException("File " + graphPath + " not found!");
