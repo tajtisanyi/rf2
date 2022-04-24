@@ -23,6 +23,11 @@ public class Main {
 	    try {
 	        parser.parseArgument(args);
 	        if(options.getType() == null || options.getSource() == null ){
+				/**
+				 * If there is no parameter given, the system will print out the 'without_param' string from the resources,
+				 * which tells the user that no parameter was given,
+				 * and also print the 'converter_usage' string.
+				 */
 				System.err.println(Resources.get("without_param"));
 				System.err.println(Resources.get("converter_usage"));
 				return;
