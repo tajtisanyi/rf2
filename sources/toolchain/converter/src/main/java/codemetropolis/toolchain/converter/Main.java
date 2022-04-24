@@ -102,8 +102,8 @@ public class Main {
 			inputStream = new FileInputStream(jsonFile);
 		} catch (FileNotFoundException e) {
 			String errorMessage = String.format("%s%s%s", Resources.get("error_prefix"), Resources.get("invalid_file_path"), args[0]);
-			FileLogger.logError(errorMessage, new FileNotFoundException());
 			System.err.println(errorMessage);
+			FileLogger.logError(errorMessage, new FileNotFoundException());
 			return null;
 		}
 		JSONObject object;
@@ -112,8 +112,8 @@ public class Main {
 			object = new JSONObject(jsonTokener);
 		} catch (JSONException e) {
 			String errorMessage = String.format("%s%s", Resources.get("error_prefix"), Resources.get("invalid_json_file"));
-			FileLogger.logError(errorMessage, new FileNotFoundException());
 			System.err.println(errorMessage);
+			FileLogger.logError(errorMessage, new FileNotFoundException());
 			return null;
 		}
 		args = convertJsonToArgs(object);
