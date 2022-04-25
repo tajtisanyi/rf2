@@ -22,7 +22,7 @@ public class Linking {
     private static final Map<Type, String[]> SUPPORTED_PROPERTIES = new HashMap<>();
     
     /**
-     * Stores the supported properties for buildable type.
+     * Stores the supported properties for buildable type.  It is necessary to have a valid linking.
      **/
 
     static
