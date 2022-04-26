@@ -33,13 +33,25 @@ public class GraphConverter extends CdfConverter {
 		graph.loadBinary(graphPath);
 		Node root = graph.findNode(ROOT_NODE_ID);
 		CdfElement rootElement = createElementsRecursively(root);
+		createElementsContent(root);
 		return new CdfTree(rootElement);
 	}
+	
 	
 	private CdfElement createElementsRecursively(Node root) {
 		String name = ((AttributeString)root.findAttributeByName("Name").next()).getValue();
 		String type = root.getType().getType();
 		CdfElement element = new CdfElement(name, type);
+		element.setSourceId(root.getUID());
+		addProperties(root, element);
+		for(Node child : getChildNodes(root)) {
+			element.addChildElement(createElementsRecursively(child));
+		}
+		return element;
+	}
+
+	private CdfElement createElementsContent(Node root) {
+		CdfElement element = new CdfElement("content", "string");
 		element.setSourceId(root.getUID());
 		addProperties(root, element);
 		for(Node child : getChildNodes(root)) {
@@ -83,6 +95,7 @@ public class GraphConverter extends CdfConverter {
 			}
 		    element.addProperty(a.getName(), String.valueOf(value), type);
 		}
+		element.addProperty("content", "content_value",  CdfProperty.Type.STRING);
 	}
 
 }
