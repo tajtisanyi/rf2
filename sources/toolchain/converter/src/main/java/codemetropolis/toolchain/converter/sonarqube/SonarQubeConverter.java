@@ -43,13 +43,14 @@ public class SonarQubeConverter extends CdfConverter {
 		
 		CdfElement rootElement = new CdfElement(ROOT_CONTAINER_NAME, ROOT_CONTAINER_TYPE);
 		cdfTree.setRoot(rootElement);
-		
+		createContent();
 		while(iterator.hasNext()){
 			Integer rootId = iterator.next();
 			SonarResource res = resources.get(rootId);
 			if(Scope.PRJ.equals(res.getScope())){
 				CdfElement projectElement = createCdfElement(res);
 				rootElement.addChildElement(projectElement);
+				rootElement.addChildElement(createContent());
 			}
 		}
 		
@@ -57,7 +58,7 @@ public class SonarQubeConverter extends CdfConverter {
 		if(splitDirsParam != null && Boolean.valueOf(splitDirsParam)) {
 			processDirHierarchy(cdfTree);
 		}
-		
+
 		return cdfTree;
 	}
 	
@@ -97,6 +98,15 @@ public class SonarQubeConverter extends CdfConverter {
 		
 		return result;
 	}
+
+	private CdfElement createContent(){
+	    CdfElement content_element = new CdfElement();
+	    content_element.setName("content_value");
+	    content_element.setType("attribute");
+	    content_element.addProperty("content", "key", Type.STRING);
+	    cdfElements.put(12134334, content_element);
+	    return content_element;
+	}
 	
 	private CdfElement createCdfElement(SonarResource resource){
 		CdfElement cdfElement = new CdfElement();
@@ -107,6 +117,7 @@ public class SonarQubeConverter extends CdfConverter {
 		addCdfProperties(cdfElement, resource.getMetrics());
 		setChildren(cdfElement, resource);
 		cdfElements.put(resource.getId(), cdfElement);
+		cdfElements.put(123, createContent());
 		
 		return cdfElement;
 	}
@@ -115,6 +126,8 @@ public class SonarQubeConverter extends CdfConverter {
 		for(SonarMetric metric : metrics){
 			cdfElement.addProperty(metric.getName(), metric.getValue(), getMetricType(metric.getType()));
 		}
+		cdfElement.addProperty("content", "content_value", Type.STRING );
+
 	}
 	
 	private Type getMetricType(MetricType type){
