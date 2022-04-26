@@ -15,6 +15,7 @@
         <binding from="LLOC" to="height"/>
         <binding from="NII" to="width"/>
         <binding from="NOI" to="length"/>
+        <binding from="content" to="content"/>
         <binding from="McCC" to="character">
             <conversions>
                 <conversion type="quantization">
@@ -57,14 +58,8 @@
             </conversions>
         </binding>
         <binding from="${cellar_character}" to="character"/>
+        <binding from="content" to="content"/>
         <binding from="${cellar_external_character}" to="external_character"/>
     </linking>
-    <linking source="attribute" target="floor">
-        <binding from="Name" to="content">
-        </binding>
-    </linking>
-    <linking source="attribute" target="cellar">
-        <binding from="Name" to="content">
-        </binding>
-    </linking>
+
 </mapping>
