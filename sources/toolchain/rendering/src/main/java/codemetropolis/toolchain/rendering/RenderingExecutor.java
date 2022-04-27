@@ -63,7 +63,7 @@ public class RenderingExecutor extends AbstractExecutor {
 			printError(e, Resources.get("missing_input_xml_error"));
 			return false;
 		} catch (CmxmlValidationFailedException e) {
-			print(Resources.get("not_xml_type_error")); // 2022.04.24. Tajti Sándor
+			print(Resources.get("invalid_xml_input_type_error")); // 2022.04.24. Tajti Sándor
 			return false;
 		}
 		
