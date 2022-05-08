@@ -7,9 +7,6 @@ public class CommandLineOptions {
 	
 	@Option(name="-h", aliases = { "--help" })
 	private boolean showHelp = false;
-
-	@Option(name="-test", aliases = { "--teszt" })
-	private boolean test = false;
 	
 	@Option(name="-s", aliases = { "--source", "-i", "--input" })
 	private String source = null;
@@ -30,10 +27,6 @@ public class CommandLineOptions {
 
 	public boolean showHelp() {
 		return showHelp;
-	}
-
-	public boolean test(){
-		return test;
 	}
 
 	public String[] getParams() {

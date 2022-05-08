@@ -1,6 +1,5 @@
 package codemetropolis.toolchain.cdfreducer;
 
-import codemetropolis.toolchain.cdfreducer.teszter.Teszter;
 import codemetropolis.toolchain.commons.util.FileLogger;
 import codemetropolis.toolchain.commons.util.Resources;
 import codemetropolis.toolchain.commons.util.Settings;
@@ -34,14 +33,6 @@ public class Main {
 			System.err.println(message);
 			return;
 		}
-
-
-		if(options.test()){
-			Teszter teszter = new Teszter();
-			teszter.doTeszt(options);
-			return;
-		}
-
 
 
 		Map<String, String> params = new HashMap<>();
